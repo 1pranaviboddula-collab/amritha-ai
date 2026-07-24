@@ -1,5 +1,0 @@
-allowBuilds:
-  msw: set this to true or false
-  sharp: set this to true or false
-minimumReleaseAgeExclude:
-  - openai@6.49.0
