@@ -102,6 +102,7 @@ export default function AssistantPage() {
 };
 
 const startListening = () => {
+  console.log("Mic button clicked");
   if (listening) {
     recRef.current?.stop()
     setListening(false)
