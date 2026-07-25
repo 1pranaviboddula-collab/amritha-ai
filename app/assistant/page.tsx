@@ -120,8 +120,15 @@ export default function AssistantPage() {
       const transcript = e.results[0][0].transcript
       respond(transcript)
     }
-    rec.onend = () => setListening(false)
-    rec.onerror = () => setListening(false)
+    rec.onend = () => {
+  console.log("Speech ended")
+  setListening(false)
+}
+
+rec.onerror = (e) => {
+  console.log("Speech error:", e)
+  setListening(false)
+}
     setListening(true)
     rec.start()
   }
