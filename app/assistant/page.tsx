@@ -101,28 +101,50 @@ export default function AssistantPage() {
   }
 };
 
-  const startListening = () => {
-    if (listening) {
-      recRef.current?.stop()
-      setListening(false)
-      return
-    }
-    stopSpeaking()
-    setSpeakingId(null)
-    const rec = createRecognition(lang)
-    if (!rec) {
-      // No speech recognition — focus the text box instead
-      document.getElementById('assistant-input')?.focus()
-      return
-    }
-    recRef.current = rec
-    rec.onresult = (e) => {
-      const transcript = e.results[0][0].transcript
-      respond(transcript)
-    }
-    rec.onend = () => {
-  console.log("Speech ended")
-  setListening(false)
+const startListening = () => {
+  if (listening) {
+    recRef.current?.stop()
+    setListening(false)
+    return
+  }
+
+  stopSpeaking()
+  setSpeakingId(null)
+
+  const rec = createRecognition("en")
+
+  console.log("Recognition object:", rec)
+
+  if (!rec) {
+    document.getElementById("assistant-input")?.focus()
+    return
+  }
+
+  recRef.current = rec
+
+  rec.onstart = () => {
+    console.log("Recognition started")
+  }
+
+  rec.onresult = (e) => {
+    const transcript = e.results[0][0].transcript
+    console.log("Transcript:", transcript)
+    respond(transcript)
+  }
+
+  rec.onend = () => {
+    console.log("Recognition ended")
+    setListening(false)
+  }
+
+  rec.onerror = (e: any) => {
+    console.log("Recognition error:", e.error)
+    console.log(e)
+    setListening(false)
+  }
+
+  setListening(true)
+  rec.start()
 }
 
 rec.onerror = (e) => {
