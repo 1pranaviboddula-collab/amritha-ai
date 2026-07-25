@@ -111,7 +111,7 @@ const startListening = () => {
   stopSpeaking()
   setSpeakingId(null)
 
-  const rec = createRecognition("en")
+  const rec = createRecognition(lang)
 
   console.log("Recognition object:", rec)
 
