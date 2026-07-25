@@ -121,14 +121,17 @@ function MedicineCard({
         </span>
         <div className="min-w-0 flex-1">
           <h3 className="text-lg font-extrabold leading-tight text-foreground">
-            {med.name}
-          </h3>
-          <p className="text-sm text-muted-foreground">
-            {med.condition} · {med.dosage}
-          </p>
+  <TranslatedText text={med.name} />
+</h3>
+
+<p className="text-sm text-muted-foreground">
+  <TranslatedText text={med.condition} /> · <TranslatedText text={med.dosage} />
+</p>
           {med.doctor && (
-            <p className="text-xs text-muted-foreground">{med.doctor}</p>
-          )}
+  <p className="text-xs text-muted-foreground">
+    <TranslatedText text={med.doctor} />
+  </p>
+)}
           <div className="mt-2 flex flex-wrap gap-2">
             {med.times.map((time) => (
               <span
@@ -170,7 +173,8 @@ function AddMedicineForm({
 }) {
   const [name, setName] = useState('')
   const [condition, setCondition] = useState('')
-  const [dosage, setDosage] = useState('1 tablet')
+  condition: condition.trim() || '—',
+dosage: dosage.trim() || '1 tablet',
   const [time, setTime] = useState('9:00 AM')
 
   const submit = (e: React.FormEvent) => {
@@ -216,7 +220,7 @@ function AddMedicineForm({
               value={name}
               onChange={(e) => setName(e.target.value)}
               autoFocus
-              placeholder="Paracetamol 500mg"
+              placeholder={tr("medicineName", lang)}
               className="w-full rounded-2xl border border-border bg-background px-4 py-3 text-base text-foreground outline-none focus:border-primary"
             />
           </Field>
@@ -224,7 +228,7 @@ function AddMedicineForm({
             <input
               value={condition}
               onChange={(e) => setCondition(e.target.value)}
-              placeholder="Fever"
+              placeholder={tr("forCondition", lang)}
               className="w-full rounded-2xl border border-border bg-background px-4 py-3 text-base text-foreground outline-none focus:border-primary"
             />
           </Field>
